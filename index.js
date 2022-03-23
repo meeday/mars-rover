@@ -5,6 +5,9 @@
  * @return {*} 2D array
  */
 const createNewGrid = (row, column) => {
+    if(isNaN(row) || isNaN(column)){
+        return null
+    }
     const grid = new Array(row).fill("-").map(() => new Array(column).fill("-"));
     return grid;
 }
@@ -96,13 +99,6 @@ const moveEast = (grid, currentRow, currentColumn) => {
     grid[currentRow][newColumn] = "O"
     return newPosition
 }
-// object to map abbrevation to their name
-const mapToDirection = {
-    "N": "north",
-    "E": "east",
-    "S": "south",
-    "W": "west"
-}
 
 
 /**
@@ -113,6 +109,15 @@ const mapToDirection = {
  * @return {object} rover final position, orientation and status
  */
 const gamePlay = (gridSize, startingPosition, path) => {
+
+    // object to map abbrevation to their name
+    const mapToDirection = {
+        "N": "north",
+        "E": "east",
+        "S": "south",
+        "W": "west"
+    }
+
     //create grid
     const grid = createNewGrid(gridSize[0], gridSize[1])
     // initialise rover
@@ -135,7 +140,6 @@ const gamePlay = (gridSize, startingPosition, path) => {
 
     const pathArray = path.split("")
     for (let i = 0; i < pathArray.length; i++) {
-        console.log("\n")
         console.log(`*****step ${i + 1}*****`)
         displayGrid(grid)
         console.log("**********************");
@@ -234,3 +238,12 @@ const gamePlay = (gridSize, startingPosition, path) => {
 }
 
 console.log(gamePlay([4,8],[0,2,"N"],"FFLFRFF"))
+
+module.exports = {
+    createNewGrid,
+    moveNorth,
+    moveEast,
+    moveSouth,
+    moveWest,
+    gamePlay
+}
