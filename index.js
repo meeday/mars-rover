@@ -96,3 +96,30 @@ const moveEast = (grid, currentRow, currentColumn) => {
     grid[currentRow][newColumn] = "O"
     return newPosition
 }
+// object to map abbrevation to their name
+const mapToDirection ={
+    "N": "north",
+    "E": "east",
+    "S": "south",
+    "W": "west"
+}
+
+const gamePlay = (gridSize, startingPosition, path) => {
+    //create grid
+    const grid = createNewGrid(gridSize[0], gridSize[1])
+    // initialise rover
+    const rover = {
+        positionX: startingPosition[0],
+        positionY: startingPosition[1],
+        orientation: startingPosition[2]
+    }
+
+    console.log("\n")
+    console.log(`Rover facing ${mapToDirection[rover.orientation]}`)
+    console.log("\n")
+
+    // show starting position of rover on grid
+    gird[rover.positionX][rover.positionY] = "O"
+
+
+}
