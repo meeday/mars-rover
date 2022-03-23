@@ -193,10 +193,31 @@ const gamePlay = (gridSize, startingPosition, path) => {
                     rover.positionY = newPosition[1]
                 }
                 break;
-                // right roatation will be different depending on rover's orientation 
+                // right roatation will be different depending on rover's orientation
+                // no position change, only orientation will change
             case "R":
-                
+                if (rover.orientation === "E") {
+                    rover.orientation = "S"
+                } else if (rover.orientation === "W") {
+                    rover.orientation = "N"
+                } else if (rover.orientation === "S") {
+                    rover.orientation = "W"
+                } else {
+                    rover.orientation = "E"
+                }
+                break;
 
+            case "L":
+                if (rover.orientation === "E") {
+                    rover.orientation = "N"
+                } else if (rover.orientation === "W") {
+                    rover.orientation = "S"
+                } else if (rover.orientation === "S") {
+                    rover.orientation = "E"
+                } else {
+                    rover.orientation = "W"
+                }
+                break;
 
             default:
                 break;
