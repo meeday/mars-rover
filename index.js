@@ -34,7 +34,7 @@ const displayGrid = (grid) => {
 const moveNorth = (grid, currentRow, currentColumn) => {
     const newRow = currentRow + 1
     const newPosition = [newRow, currentColumn]
-    if(newRow > grid.length -1){
+    if (newRow > grid.length - 1) {
         return "Lost"
     }
     // to make tracking rover easier. "x" symbolises the rovers previous moves and "O" symbolises the rovers current postion
@@ -53,7 +53,7 @@ const moveNorth = (grid, currentRow, currentColumn) => {
 const moveSouth = (grid, currentRow, currentColumn) => {
     const newRow = currentRow - 1
     const newPosition = [newRow, currentColumn]
-    if (newRow < 0 ) {
+    if (newRow < 0) {
         return "Lost"
     }
     grid[currentRow][currentColumn] = "x"
@@ -90,20 +90,26 @@ const moveEast = (grid, currentRow, currentColumn) => {
     const newColumn = currentColumn + 1
     const newPosition = [currentRow, newColumn]
     if (newColumn > grid[0].length - 1) {
-        return "Lost" 
+        return "Lost"
     }
     grid[currentRow][currentColumn] = "x"
     grid[currentRow][newColumn] = "O"
     return newPosition
 }
 // object to map abbrevation to their name
-const mapToDirection ={
+const mapToDirection = {
     "N": "north",
     "E": "east",
     "S": "south",
     "W": "west"
 }
 
+// /**
+//  * @description game play function
+//  * @param {array} gridSize
+//  * @param {array} startingPosition
+//  * @param {string} path
+//  */
 const gamePlay = (gridSize, startingPosition, path) => {
     //create grid
     const grid = createNewGrid(gridSize[0], gridSize[1])
@@ -120,6 +126,50 @@ const gamePlay = (gridSize, startingPosition, path) => {
 
     // show starting position of rover on grid
     gird[rover.positionX][rover.positionY] = "O"
+
+    console.log("\n");
+    displayGrid(grid)
+    console.log("\n");
+
+    const pathArray = path.split("")
+    for (let i = 0; i < pathArray.length; i++) {
+        console.log("\n")
+        console.log(`step ${i + 1}`)
+        displayGrid(grid)
+        console.log("**********************");
+        console.log("\n");
+
+        // switch case to move or rotate rover depending on instructions provided
+        switch (pathArray[i]) {
+            case "F":
+                // forward will be different depending on the orientation of the rover
+                if(rover.orientation === "E"){
+                    const newPosition = moveEast(grid, rover.positionX, rover.positionY)
+                    if(newPosition === "Lost"){
+                        return {
+                            status: "Lost",
+                            positionX: rover.positionX,
+                            positionY: rover.positionY,
+                            orientation: rover.orientation
+                        };
+                    }
+                    rover.positionX = newPosition[0]
+                    rover.positionY = newPosition[1]
+                }
+
+                break;
+
+            default:
+                break;
+        }
+
+
+
+
+
+
+
+    }
 
 
 }
