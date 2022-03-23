@@ -104,12 +104,14 @@ const mapToDirection = {
     "W": "west"
 }
 
-// /**
-//  * @description game play function
-//  * @param {array} gridSize
-//  * @param {array} startingPosition
-//  * @param {string} path
-//  */
+
+/**
+ * @description game play function
+ * @param {array} gridSize
+ * @param {array} startingPosition
+ * @param {string} path
+ * @return {object} rover final position, orientation and status
+ */
 const gamePlay = (gridSize, startingPosition, path) => {
     //create grid
     const grid = createNewGrid(gridSize[0], gridSize[1])
@@ -125,7 +127,7 @@ const gamePlay = (gridSize, startingPosition, path) => {
     console.log("\n")
 
     // show starting position of rover on grid
-    gird[rover.positionX][rover.positionY] = "O"
+    grid[rover.positionX][rover.positionY] = "O"
 
     console.log("\n");
     displayGrid(grid)
@@ -134,7 +136,7 @@ const gamePlay = (gridSize, startingPosition, path) => {
     const pathArray = path.split("")
     for (let i = 0; i < pathArray.length; i++) {
         console.log("\n")
-        console.log(`step ${i + 1}`)
+        console.log(`*****step ${i + 1}*****`)
         displayGrid(grid)
         console.log("**********************");
         console.log("\n");
@@ -143,9 +145,9 @@ const gamePlay = (gridSize, startingPosition, path) => {
         switch (pathArray[i]) {
             case "F":
                 // forward will be different depending on the orientation of the rover
-                if(rover.orientation === "E"){
+                if (rover.orientation === "E") {
                     const newPosition = moveEast(grid, rover.positionX, rover.positionY)
-                    if(newPosition === "Lost"){
+                    if (newPosition === "Lost") {
                         return {
                             status: "Lost",
                             positionX: rover.positionX,
@@ -155,9 +157,9 @@ const gamePlay = (gridSize, startingPosition, path) => {
                     }
                     rover.positionX = newPosition[0]
                     rover.positionY = newPosition[1]
-                } else if (rover.orientation === "W"){
+                } else if (rover.orientation === "W") {
                     const newPosition = moveWest(grid, rover.positionX, rover.positionY)
-                    if(newPosition === "Lost"){
+                    if (newPosition === "Lost") {
                         return {
                             status: "Lost",
                             positionX: rover.positionX,
@@ -167,9 +169,9 @@ const gamePlay = (gridSize, startingPosition, path) => {
                     }
                     rover.positionX = newPosition[0]
                     rover.positionY = newPosition[1]
-                } else if (rover.orientation === "S"){
+                } else if (rover.orientation === "S") {
                     const newPosition = moveSouth(grid, rover.positionX, rover.positionY)
-                    if(newPosition === "Lost"){
+                    if (newPosition === "Lost") {
                         return {
                             status: "Lost",
                             positionX: rover.positionX,
@@ -181,7 +183,7 @@ const gamePlay = (gridSize, startingPosition, path) => {
                     rover.positionY = newPosition[1]
                 } else {
                     const newPosition = moveNorth(grid, rover.positionX, rover.positionY)
-                    if(newPosition === "Lost"){
+                    if (newPosition === "Lost") {
                         return {
                             status: "Lost",
                             positionX: rover.positionX,
@@ -222,14 +224,13 @@ const gamePlay = (gridSize, startingPosition, path) => {
             default:
                 break;
         }
-
-
-
-
-
-
-
     }
-
-
+    return {
+        status:"Not Lost",
+        positionX: rover.positionX,
+        positionY: rover.positionY,
+        orientation: rover.orientation
+    }
 }
+
+console.log(gamePlay([4,8],[0,2,"N"],"FFLFRFF"))
