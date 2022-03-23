@@ -139,7 +139,7 @@ const gamePlay = (gridSize, startingPosition, path) => {
         console.log("**********************");
         console.log("\n");
 
-        // switch case to move or rotate rover depending on instructions provided
+        // switch case to move or rotate rover depending on rover's orientation
         switch (pathArray[i]) {
             case "F":
                 // forward will be different depending on the orientation of the rover
@@ -155,9 +155,48 @@ const gamePlay = (gridSize, startingPosition, path) => {
                     }
                     rover.positionX = newPosition[0]
                     rover.positionY = newPosition[1]
+                } else if (rover.orientation === "W"){
+                    const newPosition = moveWest(grid, rover.positionX, rover.positionY)
+                    if(newPosition === "Lost"){
+                        return {
+                            status: "Lost",
+                            positionX: rover.positionX,
+                            positionY: rover.positionY,
+                            orientation: rover.orientation
+                        };
+                    }
+                    rover.positionX = newPosition[0]
+                    rover.positionY = newPosition[1]
+                } else if (rover.orientation === "S"){
+                    const newPosition = moveSouth(grid, rover.positionX, rover.positionY)
+                    if(newPosition === "Lost"){
+                        return {
+                            status: "Lost",
+                            positionX: rover.positionX,
+                            positionY: rover.positionY,
+                            orientation: rover.orientation
+                        };
+                    }
+                    rover.positionX = newPosition[0]
+                    rover.positionY = newPosition[1]
+                } else {
+                    const newPosition = moveNorth(grid, rover.positionX, rover.positionY)
+                    if(newPosition === "Lost"){
+                        return {
+                            status: "Lost",
+                            positionX: rover.positionX,
+                            positionY: rover.positionY,
+                            orientation: rover.orientation
+                        };
+                    }
+                    rover.positionX = newPosition[0]
+                    rover.positionY = newPosition[1]
                 }
-
                 break;
+                // right roatation will be different depending on rover's orientation 
+            case "R":
+                
+
 
             default:
                 break;
